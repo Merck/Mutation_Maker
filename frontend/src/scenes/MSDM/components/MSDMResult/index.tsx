@@ -23,32 +23,32 @@ import withSelectedAndHighlighted, {
   WithSelectedAndHighlighted,
 } from 'shared/components/withSelectedAndHighlighted'
 import {
-  IndexedQCLMFlatResultRecord,
-  QCLMResultData,
+  IndexedMSDMFlatResultRecord,
+  MSDMResultData,
   resultRecordsToFlatResultRecords,
 } from 'shared/lib/ResultData'
 import SaveFile from 'shared/components/SaveFile'
-import QCLMFeatureViewer from './components/QCLMFeatureViewer'
-import QCLMResultTable from './components/QCLMResultTable'
+import MSDMFeatureViewer from './components/MSDMFeatureViewer'
+import MSDMResultTable from './components/MSDMResultTable'
 import ratioCounter from './components/ratioCounter'
-import QCLMInputsTable from './components/QCLMInputsTable/QCLMInputsTable';
-import { QCLMFormData } from 'shared/lib/FormData';
+import MSDMInputsTable from './components/MSDMMInputsTable/MSDMInputsTable';
+import { MSDMFormData } from 'shared/lib/FormData';
 
-type QCLMResultOuterProps = {
+type MSDMResultOuterProps = {
   jobId?: string
-  resultData: QCLMResultData,
-  formData: Partial<QCLMFormData>
+  resultData: MSDMResultData,
+  formData: Partial<MSDMFormData>
 }
 
 type WithProcessedResults = {
   geneSequence: string
   geneOffset: number
-  resultRecords: IndexedQCLMFlatResultRecord[]
+  resultRecords: IndexedMSDMFlatResultRecord[]
 }
 
-type QCLMResultInnerProps = QCLMResultOuterProps & WithProcessedResults & WithSelectedAndHighlighted
+type MSDMResultInnerProps = MSDMResultOuterProps & WithProcessedResults & WithSelectedAndHighlighted
 
-const QCLMResult: React.SFC<QCLMResultInnerProps> = ({
+const MSDMResult: React.SFC<MSDMResultInnerProps> = ({
   jobId,
   geneSequence,
   geneOffset,
@@ -63,18 +63,18 @@ const QCLMResult: React.SFC<QCLMResultInnerProps> = ({
 }) => (
   <>
     {jobId && (
-      <SaveFile result={resultRecords} type="qclm" input={resultData.input_data} formData={formData} />
+      <SaveFile result={resultRecords} type="msdm" input={resultData.input_data} formData={formData} />
     )}
     <Divider className="Result--divider" />
     <Row className="Result" gutter={8}>
       <Col className="Result--col print-only" xxl={12}>
         <div className="Result--wrapper Wrapper-Print-Only">
-          <QCLMInputsTable formData={formData} />
+          <MSDMInputsTable formData={formData} />
         </div>
       </Col>
       <Col className="Result--col" xxl={12}>
         <div className="Result--wrapper">
-          <QCLMResultTable
+          <MSDMResultTable
             resultRecords={resultRecords}
             selected={selected}
             highlighted={highlighted}
@@ -86,7 +86,7 @@ const QCLMResult: React.SFC<QCLMResultInnerProps> = ({
       </Col>
       <Col className="Result--col" xxl={12}>
         <div className="Result--wrapper">
-          <QCLMFeatureViewer
+          <MSDMFeatureViewer
             geneSequence={geneSequence}
             geneOffset={geneOffset}
             resultRecords={resultRecords}
@@ -102,8 +102,8 @@ const QCLMResult: React.SFC<QCLMResultInnerProps> = ({
   </>
 );
 
-export default compose<QCLMResultInnerProps, QCLMResultOuterProps>(
-  withProps<WithProcessedResults, QCLMResultOuterProps>(({ resultData }) => ({
+export default compose<MSDMResultInnerProps, MSDMResultOuterProps>(
+  withProps<WithProcessedResults, MSDMResultOuterProps>(({ resultData }) => ({
     geneSequence: resultData.full_sequence,
     geneOffset: resultData.goi_offset,
     resultRecords: ratioCounter(
@@ -111,4 +111,4 @@ export default compose<QCLMResultInnerProps, QCLMResultOuterProps>(
     ),
   })),
   withSelectedAndHighlighted,
-)(QCLMResult)
+)(MSDMResult)
