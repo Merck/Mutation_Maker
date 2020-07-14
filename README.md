@@ -76,9 +76,7 @@ in [docker-compose.yml](docker-compose.yml) file.
 
 # Example deployment on Ubuntu
 
-using systemctl
-
-
+Follow these steps to setup Mutation Maker on Ubuntu with root access using systemctl services. This makes sure that all required services keep runing on server restart.
 
 ## 1) Install required packages
 
