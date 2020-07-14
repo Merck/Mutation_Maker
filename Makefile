@@ -59,20 +59,20 @@ run-monitor:
 
 ## Install all services
 services: service-redis service-frontend service-worker service-api
-	sudo systemctl status nginx celery gunicorn redis-server
+	sudo systemctl status --no-pager nginx celery gunicorn redis-server
 
 ## Restart redis service (should be available after installing redis-server)
 service-redis:
 	sudo systemctl enable redis-server.service
 	sudo systemctl restart redis-server.service
-	sleep 3; sudo systemctl status redis-server.service
+	sleep 3; sudo systemctl status --no-pager redis-server.service
 
 ## Install built frontend into nginx dir
 service-frontend:
 	sudo cp frontend/resources/local-nginx-frontend.conf /etc/nginx/sites-enabled/default
 	sudo rm -rf /var/www/html; sudo mkdir -p /var/www/; sudo cp -r frontend/build /var/www/html
 	sudo systemctl restart nginx
-	sleep 3; sudo systemctl status nginx
+	sleep 3; sudo systemctl status --no-pager nginx
 
 ## Install celery as service
 service-worker:
@@ -83,14 +83,14 @@ service-worker:
 	sudo systemd-tmpfiles --create
 	sudo systemctl daemon-reload
 	sudo systemctl restart celery
-	sleep 3; sudo systemctl status celery
+	sleep 3; sudo systemctl status --no-pager celery
 
 ## Install api gunicorn service
 service-api:
 	sudo cp api/resources/gunicorn.service /etc/systemd/system/gunicorn.service
 	sudo systemctl daemon-reload
 	sudo systemctl restart gunicorn
-	sleep 3; sudo systemctl status gunicorn
+	sleep 3; sudo systemctl status --no-pager gunicorn
 
 #
 # Docker
