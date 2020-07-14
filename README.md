@@ -149,7 +149,7 @@ For platform specific instructions to install Conda, please refer to the officia
 
 Create `mutationmaker` environment using Conda:
 ```bash
-make env
+make conda-env
 ```
 
 Or install the requirements directly:
